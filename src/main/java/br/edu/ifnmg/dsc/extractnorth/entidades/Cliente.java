@@ -3,13 +3,10 @@ package br.edu.ifnmg.dsc.extractnorth.entidades;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "Clientes")
-@Getter
-@Setter
+
 public class Cliente extends Pessoa {
 
     /* Attributes */

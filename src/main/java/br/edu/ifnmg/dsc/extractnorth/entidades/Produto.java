@@ -1,5 +1,7 @@
 package br.edu.ifnmg.dsc.extractnorth.entidades;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +11,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Produtos")
-
 public class Produto {
 
   /* Attributes */
@@ -21,65 +22,72 @@ public class Produto {
   private String nome;
 
   @Column(nullable = false)
-  private double preco;
+  private double precoCompra;
 
-  /* Constructor */
-  public Produto(String nome, double preco) {
+  @Column(nullable = false)
+  private Double precoVenda;
+
+  public Produto(int id, String nome, double precoCompra, Double precoVenda) {
+    this.id = id;
     this.nome = nome;
-    this.preco = preco;
+    this.precoCompra = precoCompra;
+    this.precoVenda = precoVenda;
   }
 
-  /* Getters and Setters */
+  public int getId() {
+    return this.id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public String getNome() {
-    return nome;
+    return this.nome;
   }
 
   public void setNome(String nome) {
     this.nome = nome;
   }
 
-  public double getPreco() {
-    return preco;
+  public double getPrecoCompra() {
+    return this.precoCompra;
   }
 
-  public void setPreco(double preco) {
-    this.preco = preco;
+  public void setPrecoCompra(double precoCompra) {
+    this.precoCompra = precoCompra;
   }
 
-  /* Java Beans */
+  public Double getPrecoVenda() {
+    return this.precoVenda;
+  }
+
+  public void setPrecoVenda(Double precoVenda) {
+    this.precoVenda = precoVenda;
+  }
+
+  
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-    long temp;
-    temp = Double.doubleToLongBits(preco);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
-    return result;
+    return Objects.hash(id, nome, precoCompra, precoVenda);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
+    if (!(obj instanceof Produto))
       return false;
     Produto other = (Produto) obj;
-    if (nome == null) {
-      if (other.nome != null)
-        return false;
-    } else if (!nome.equals(other.nome))
-      return false;
-    if (Double.doubleToLongBits(preco) != Double.doubleToLongBits(other.preco))
-      return false;
-    return true;
+    return id == other.id && Objects.equals(nome, other.nome)
+        && Double.doubleToLongBits(precoCompra) == Double.doubleToLongBits(other.precoCompra)
+        && Objects.equals(precoVenda, other.precoVenda);
   }
 
   @Override
   public String toString() {
-    return "Produto [nome=" + nome + ", preco=" + preco + "]";
+    return nome;
   }
+  
 
 }

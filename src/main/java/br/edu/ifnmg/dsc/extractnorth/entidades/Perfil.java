@@ -13,15 +13,17 @@ public class Perfil extends Funcionario {
   private String atribuicao;
 
   /* Constructors */
-  public Perfil(long id, String nome, Long telefone, String email, Endereco endereco, long cpf, boolean status,
-      String atribuicao) {
-    super(id, nome, telefone, email, endereco, cpf, status);
-    this.atribuicao = atribuicao;
-  }
+  
 
   /* Getters and Setters */
   public String getAtribuicao() {
     return atribuicao;
+  }
+
+  public Perfil(long id, String nome, Long telefone, String email, Endereco endereco, long cpf, boolean status,
+      Double salario, String atribuicao) {
+    super(id, nome, telefone, email, endereco, cpf, status, salario);
+    this.atribuicao = atribuicao;
   }
 
   public void setAtribuicao(String atribuicao) {

@@ -2,6 +2,8 @@ package br.edu.ifnmg.dsc.extractnorth.entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -11,21 +13,38 @@ public class Funcionario extends Pessoa {
   /* Attributes */
 
   @Column(length = 11, nullable = true, unique = true)
-  protected long cpf;
+  private long cpf;
 
   @Column(nullable = false)
-  protected boolean status;
+  private boolean status;
+
+  @Column(nullable = false)
+  private Double salario;
+
+  @OneToOne
+  @JoinColumn(name = "endereco_id", nullable = false)
+  private Endereco endereco;
 
   /* Constructor */
-  public Funcionario(long id, String nome, Long telefone, String email, Endereco endereco, long cpf, boolean status) {
+    public Funcionario(long id, String nome, Long telefone, String email, Endereco endereco, long cpf, boolean status,
+      Double salario) {
     super(id, nome, telefone, email, endereco);
     this.cpf = cpf;
     this.status = status;
+    this.salario = salario;
   }
 
   /* Getters and Setters */
   public long getCpf() {
     return cpf;
+  }
+
+  public Double getSalario() {
+      return salario;
+  }
+
+  public void setSalario(Double salario) {
+      this.salario = salario;
   }
 
   public void setCpf(long cpf) {

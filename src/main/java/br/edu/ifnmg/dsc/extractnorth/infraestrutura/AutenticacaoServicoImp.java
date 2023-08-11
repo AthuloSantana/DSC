@@ -19,7 +19,7 @@ public class AutenticacaoServicoImp implements AutenticacaoServico {
 
   @Override
   public boolean autenticar(String login, String senha) {
-    usuario = repositorio.Abrir(login);
+    usuario = repositorio.Abrir(login, senha);
     if (usuario != null) {
       if (usuario.getSenha().equals(senha)) {
         return true;

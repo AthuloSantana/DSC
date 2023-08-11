@@ -13,7 +13,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
-public class DAO<T> implements Repositorio<T> {
+public abstract class DAO<T> implements Repositorio<T> {
 
   @PersistenceContext
   private EntityManager manager;
@@ -66,7 +66,7 @@ public class DAO<T> implements Repositorio<T> {
 
   @Override
   @Transactional
-  public List<T> Buscar(T filtro) {
+  public List<T> Listar() {
     try {
       CriteriaBuilder cb = manager.getCriteriaBuilder();
       CriteriaQuery<T> cr = cb.createQuery(classe);
@@ -80,5 +80,8 @@ public class DAO<T> implements Repositorio<T> {
       return null;
     }
   }
+
+  public abstract List<T> Buscar(T filtro);
+  
 
 }

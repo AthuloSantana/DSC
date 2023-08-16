@@ -1,7 +1,10 @@
 package br.edu.ifnmg.dsc.extractnorth.entidades;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,6 +21,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "Pessoas")
 @Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorColumn(name = "perfil")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -39,6 +43,9 @@ public class Pessoa {
   @Column(name = "email", length = 255, nullable = false)
   protected String email;
 
-  @OneToOne(mappedBy = "pessoa")
+  //@Enumerated(EnumType.ORDINAL)
+  //private PessoaPerfil perfil;
+
+  @OneToOne //(mappedBy = "pessoa", targetEntity = Endereco.class)
   protected Endereco endereco;
 }

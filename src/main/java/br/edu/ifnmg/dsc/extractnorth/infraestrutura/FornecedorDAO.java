@@ -1,20 +1,16 @@
 package br.edu.ifnmg.dsc.extractnorth.infraestrutura;
 
 import java.util.ArrayList;
-
 import org.springframework.stereotype.Service;
-
 import com.thoughtworks.qdox.model.expression.Query;
-
 import br.edu.ifnmg.dsc.extractnorth.entidades.Fornecedor;
-import br.edu.ifnmg.dsc.extractnorth.entidades.Pessoa;
 import br.edu.ifnmg.dsc.extractnorth.servicos.FornecedorRepositorio;
 
 @Service
 public class FornecedorDAO extends DAO<Fornecedor> implements FornecedorRepositorio {
 
-  public FornecedorDAO(Class<Fornecedor> classe) {
-    super(classe);
+  public FornecedorDAO() {
+    super(Fornecedor.class);
   }
 
   @Override
@@ -38,6 +34,7 @@ public class FornecedorDAO extends DAO<Fornecedor> implements FornecedorReposito
     if (filtro.getTelefone() != null || filtro.getTelefone() != "") {
       if (where.length() > 0)
         where += " and ";
+
       where += " f.telefone = :p2 ";
       parametros.add(filtro.getTelefone());
     }
@@ -45,6 +42,7 @@ public class FornecedorDAO extends DAO<Fornecedor> implements FornecedorReposito
     if (filtro.getCpf() != null || filtro.getCpf() != "") {
       if (where.length() > 0)
         where += "and ";
+
       where += "f.cpf = :p3 ";
       parametros.add(filtro.getCpf());
     }
@@ -52,15 +50,25 @@ public class FornecedorDAO extends DAO<Fornecedor> implements FornecedorReposito
     if (filtro.getEmail() != null || filtro.getEmail() != "") {
       if (where.length() > 0)
         where += "and ";
+
       where += "f.email = :p4";
       parametros.add(filtro.getEmail());
     }
 
-    if (((Pessoa) filtro).getEndereco().getCidade() != null || ((Pessoa) filtro).getEndereco().getCidade() != "") {
+    if (filtro.getEndereco().getCidade() != null || filtro.getEndereco().getCidade() != "") {
       if (where.length() > 0)
         where += "and ";
+
       where += "e.cidade = :p5 ";
-      parametros.add(((Pessoa) filtro).getEndereco().getCidade());
+      parametros.add(filtro.getEndereco().getCidade());
+    }
+
+    if (filtro.getEndereco().getBairro() != null || filtro.getEndereco().getBairro() != "") {
+      if (where.length() > 0)
+        where += "and ";
+
+      where += "e.bairro = :p6 ";
+      parametros.add(filtro.getEndereco().getBairro());
     }
 
     String jpq = "";

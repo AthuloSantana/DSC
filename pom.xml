@@ -14,22 +14,44 @@
 	<name>extractnorth</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
+ 	<dependency>
+ 		<groupId>net.rgielen</groupId>
+ 		<artifactId>javafx-weaver-spring-boot</artifactId>
+ 		<version>1.3.0</version>
+ 		<type>pom</type>
+ 	</dependency>
+
+
+ 	<dependency>
+ 		<groupId>net.rgielen</groupId>
+ 		<artifactId>javafx-weaver-spring</artifactId>
+ 		<version>1.3.0</version>
+ 	</dependency>
+
+
+ 	<dependency>
+ 		<groupId>net.rgielen</groupId>
+ 		<artifactId>javafx-weaver</artifactId>
+ 		<version>1.3.0</version>
+ 		<type>pom</type>
+ 	</dependency>
 
 	<!-- Add Dependencys JavaFX -->
  	<dependency>
  		<groupId>org.openjfx</groupId>
  		<artifactId>javafx-fxml</artifactId>
- 		<version>21-ea+24</version>
+ 		<version>18.0.1</version>
  	</dependency>
 
 	<!-- Add Dependencys JavaFX -->
  	<dependency>
  		<groupId>org.openjfx</groupId>
  		<artifactId>javafx-base</artifactId>
- 		<version>21-ea+24</version>
+ 		<version>18.0.1</version>
  	</dependency>
 
 	<!-- Add Dependencys JavaFX -->

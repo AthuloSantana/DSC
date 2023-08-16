@@ -24,7 +24,7 @@ public class Lote {
   /* Attributes */
   @Id
   @Column(nullable = false)
-  private int identificador;
+  private long id;
 
   @Column(length = 255, nullable = false)
   private String descricao;

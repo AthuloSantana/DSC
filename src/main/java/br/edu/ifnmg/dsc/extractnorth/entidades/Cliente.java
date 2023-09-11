@@ -18,5 +18,5 @@ public class Cliente extends Pessoa {
 
     @Column(nullable = false)
     private String atividade;
-
+    
 }

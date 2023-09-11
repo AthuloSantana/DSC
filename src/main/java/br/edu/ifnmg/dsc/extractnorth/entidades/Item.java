@@ -1,17 +1,9 @@
 package br.edu.ifnmg.dsc.extractnorth.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.math.BigDecimal;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -23,16 +15,21 @@ import lombok.ToString;
 public class Item {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  @ManyToOne
+  @JoinColumn(name = "transacao_financeira_id", nullable = false)
+  private TransacaoFinanceira transacaoFinanceira;
+
+  @Id
+  @ManyToOne
+  @JoinColumn(name = "produto_id", nullable = false)
+  private Produto produto;
 
   @Column(nullable = false)
   private double quantidade;
 
-  @ManyToOne
-  private Produto produto;
+  @Column(precision = 8, scale = 2)
+  private BigDecimal valorUnitario;
 
-  @ManyToOne
-  private TransacaoFinanceira transacao;
-
+  @Column(precision = 8, scale = 2)
+  private BigDecimal valorTotal;
 }

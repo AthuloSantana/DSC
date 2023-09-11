@@ -89,7 +89,7 @@ public class UsuarioDAO extends DAO<Usuario> implements UsuarioRepositorio {
       Usuario usuario = new Usuario();
       usuario.setLogin(novoUsuario);
       usuario.setSenha(novaSenha);
-      usuario.setAtribuicao("Dono/Adm");
+      usuario.setTipoUsuario( );
 
       entityManager().persist(usuario);
 

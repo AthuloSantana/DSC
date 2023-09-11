@@ -3,7 +3,10 @@ package br.edu.ifnmg.dsc.extractnorth.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,16 +22,15 @@ public class TransacaoFinanceira {
   private int id;
 
   @Enumerated(EnumType.ORDINAL)
-  private FormaPagamento formaPg;
+  @Column(nullable = false)
+  private FormaPagamento formaPagamento;
 
   @OneToMany(mappedBy = "transacao", cascade = CascadeType.ALL)
-  private ArrayList<Item> itens;
+  private List<Item> itens;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
   private Pessoa pessoa;
-
-  @ManyToOne
-  private Estoque estoque;
 
   @Enumerated(EnumType.ORDINAL)
   @Column(nullable = false)
@@ -36,6 +38,13 @@ public class TransacaoFinanceira {
 
   @Enumerated(EnumType.ORDINAL)
   @Column(nullable = false)
-  private StatusTransacao status;
+  private StatusTransacao statusTransacao;
+
+  @Column(precision = 8, scale = 2)
+  private BigDecimal valor;
+
+  @Column
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date dataTransacao;
 
 }

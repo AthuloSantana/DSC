@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Endereco {
 
   @Id
@@ -24,7 +25,13 @@ public class Endereco {
   @Column
   private String cidade;
 
+  @Column
+  private String numero;
+
+  @Column
+  private String estado;
+
   @OneToOne(mappedBy = "endereco")
   private Pessoa pessoa;
-
+  
 }

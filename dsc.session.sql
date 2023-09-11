@@ -1,2 +1,2 @@
 INSERT INTO Usuario ( atribuicao, LOGIN, SENHA)
-VALUES ('Dono', 'Pedro', '123456');
+VALUES ('Admin', 'Flavio', '123456');

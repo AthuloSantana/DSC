@@ -3,8 +3,6 @@ package br.edu.ifnmg.dsc.extractnorth.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
-
 @Entity
 @Getter
 @Setter
@@ -27,7 +25,7 @@ public class Produto {
   @Column(nullable = false)
   private double precoVenda;
 
-  @OneToMany(mappedBy = "produto")
-  private Collection<Lote> lote;
+  @OneToOne(mappedBy = "produto")
+  private Estoque estoque;
 
 }

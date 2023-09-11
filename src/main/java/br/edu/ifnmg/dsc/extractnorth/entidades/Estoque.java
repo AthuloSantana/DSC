@@ -18,11 +18,8 @@ public class Estoque {
 
   @Column(nullable = false)
   private Double quantidade;
-
-  @ManyToOne
-  private Lote lote;
-
-  @ManyToOne
+  
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "produto_id", referencedColumnName = "id")
   private Produto produto;
-
 }

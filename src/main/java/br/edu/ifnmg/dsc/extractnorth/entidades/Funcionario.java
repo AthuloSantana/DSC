@@ -1,7 +1,8 @@
 package br.edu.ifnmg.dsc.extractnorth.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import java.util.Date;
+
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -21,5 +22,13 @@ public class Funcionario extends Pessoa {
 
   @Column(nullable = false)
   protected Double salario;
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  protected Genero genero;
+
+  @Column
+  @Temporal(TemporalType.DATE)
+  protected Date dataNascimento;
 
 }

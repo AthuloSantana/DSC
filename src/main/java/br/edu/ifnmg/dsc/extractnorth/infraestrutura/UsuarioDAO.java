@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.edu.ifnmg.dsc.extractnorth.entidades.TipoUsuario;
 import br.edu.ifnmg.dsc.extractnorth.entidades.Usuario;
 import br.edu.ifnmg.dsc.extractnorth.servicos.UsuarioRepositorio;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -61,7 +63,7 @@ public class UsuarioDAO extends DAO<Usuario> implements UsuarioRepositorio {
       if (!filtro.getLogin().isEmpty()) {
         jpql += " where u.login like :login";
       }
-      Query consulta = getManager().createQuery(jpql);
+       TypedQuery<Usuario> consulta = getManager().createQuery(jpql, Usuario.class);
       if (!filtro.getLogin().isEmpty()) {
         consulta.setParameter("login", filtro.getLogin());
       }
@@ -78,9 +80,9 @@ public class UsuarioDAO extends DAO<Usuario> implements UsuarioRepositorio {
     Query consulta = getManager().createQuery("SELECT u FROM Usuario u WHERE u.login = :login");
     consulta.setParameter("login", novoUsuario);
 
-    List<Usuario> usuarios = consulta.getResultList();
+    // List<Usuario> usuarios = consulta.getResultList();
 
-    if (!usuarios.isEmpty()) {
+    if (!consulta.getResultList().isEmpty()) {
       // Usuário com o mesmo login já existe
       return false;
     }
@@ -89,7 +91,8 @@ public class UsuarioDAO extends DAO<Usuario> implements UsuarioRepositorio {
       Usuario usuario = new Usuario();
       usuario.setLogin(novoUsuario);
       usuario.setSenha(novaSenha);
-      usuario.setTipoUsuario( );
+      usuario.setTipoUsuario(TipoUsuario.Administrador);
+      usuario.setNome("Flávio");
 
       entityManager().persist(usuario);
 

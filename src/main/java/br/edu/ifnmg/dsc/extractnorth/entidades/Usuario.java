@@ -20,7 +20,7 @@ public class Usuario {
     private String nome;
 
     @Column(nullable = false)
-    private boolean status;
+    private boolean status = true;
 
     @Column(length = 50, unique = true, nullable = false)
     private String login;

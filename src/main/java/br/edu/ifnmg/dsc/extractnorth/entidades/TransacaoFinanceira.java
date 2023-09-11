@@ -25,7 +25,7 @@ public class TransacaoFinanceira {
   @Column(nullable = false)
   private FormaPagamento formaPagamento;
 
-  @OneToMany(mappedBy = "transacao", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "transacaoFinanceira", cascade = CascadeType.ALL)
   private List<Item> itens;
 
   @ManyToOne(cascade = CascadeType.MERGE)

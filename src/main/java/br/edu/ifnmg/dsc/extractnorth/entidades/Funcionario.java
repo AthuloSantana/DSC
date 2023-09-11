@@ -15,20 +15,20 @@ import lombok.*;
 public class Funcionario extends Pessoa {
 
   @Column(length = 11, unique = true)
-  protected String cpf;
+  private String cpf;
 
   @Column(nullable = false)
-  protected boolean status;
+  private boolean status;
 
   @Column(nullable = false)
-  protected Double salario;
+  private Double salario;
 
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
-  protected Genero genero;
+  private Genero genero;
 
   @Column
   @Temporal(TemporalType.DATE)
-  protected Date dataNascimento;
+  private Date dataNascimento;
 
 }

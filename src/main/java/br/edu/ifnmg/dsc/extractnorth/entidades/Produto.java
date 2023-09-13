@@ -20,10 +20,10 @@ public class Produto {
   private String nome;
 
   @Column(nullable = false)
-  private double precoCompra;
+  private Double precoCompra;
 
   @Column(nullable = false)
-  private double precoVenda;
+  private Double precoVenda;
 
   @OneToOne(mappedBy = "produto")
   private Estoque estoque;

@@ -1,26 +1,18 @@
 package br.edu.ifnmg.dsc.extractnorth.apresentacao.Desktop;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.google.inject.Inject;
-
 import br.edu.ifnmg.dsc.extractnorth.entidades.Endereco;
-import br.edu.ifnmg.dsc.extractnorth.entidades.Funcionario;
-import br.edu.ifnmg.dsc.extractnorth.entidades.Genero;
+import br.edu.ifnmg.dsc.extractnorth.entidades.Fornecedor;
 import br.edu.ifnmg.dsc.extractnorth.servicos.EnderecoRepositorio;
-import br.edu.ifnmg.dsc.extractnorth.servicos.FuncionarioRepositorio;
-import javafx.collections.FXCollections;
+import br.edu.ifnmg.dsc.extractnorth.servicos.FornecedorRepositorio;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TabPane;
@@ -32,16 +24,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import net.rgielen.fxweaver.core.FxmlView;
 
 @Service
-@FxmlView("FuncionariosView.fxml")
-public class FuncionarioController extends Controller {
+@FxmlView("FornecedoresView.fxml")
+public class FornecedorController extends Controller {
 
-    private Funcionario entidade;
+    private Fornecedor entidade;
 
     @Inject
-    FuncionarioRepositorio funcionarios;
+    FornecedorRepositorio fornecedores;
 
     @Autowired
-    private FuncionarioRepositorio repositorio;
+    private FornecedorRepositorio repositorio;
 
     @Autowired
     private EnderecoRepositorio enderecoRepositorio;
@@ -53,7 +45,7 @@ public class FuncionarioController extends Controller {
     private TextField txtCpfBusca;
 
     @FXML
-    private TableView<Funcionario> tblBusca;
+    private TableView<Fornecedor> tblBusca;
 
     @FXML
     private TextField inpNome;
@@ -65,19 +57,7 @@ public class FuncionarioController extends Controller {
     private TextField inpTelefone;
 
     @FXML
-    private TextField inpSalario;
-
-    @FXML
     private TextField inpEmail;
-
-    @FXML
-    private DatePicker inpDataNascimento;
-
-    @FXML
-    private ChoiceBox<Genero> inpGenero;
-
-    @FXML
-    private TextField inpCargo;
 
     @FXML
     private TextField inpRua;
@@ -95,15 +75,12 @@ public class FuncionarioController extends Controller {
     private TextField inpEstado;
 
     @FXML
-    private CheckBox checkBoxAtivo;
-
-    @FXML
     private Label lblId;
 
     @FXML
     private TabPane abas;
 
-    public FuncionarioController() {
+    public FornecedorController() {
 
     }
 
@@ -115,8 +92,6 @@ public class FuncionarioController extends Controller {
 
         configurarTabela();
 
-        inpGenero.setItems(FXCollections.observableArrayList(Genero.values()));
-
         abas.getTabs().get(1).setDisable(true);
 
     }
@@ -124,37 +99,31 @@ public class FuncionarioController extends Controller {
     private void configurarTabela() {
 
         tblBusca.getColumns().removeAll(tblBusca.getColumns());
-        TableColumn<Funcionario, String> nome = new TableColumn<>("NOME");
+        TableColumn<Fornecedor, String> nome = new TableColumn<>("NOME");
 
         nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tblBusca.getColumns().add(nome);
 
         tblBusca.getColumns().removeAll(tblBusca.getColumns());
-        TableColumn<Funcionario, String> cpf = new TableColumn<>("CPF");
+        TableColumn<Fornecedor, String> cpf = new TableColumn<>("CPF");
 
         cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         tblBusca.getColumns().add(cpf);
 
-        tblBusca.getColumns().removeAll(tblBusca.getColumns());
-        TableColumn<Funcionario, String> cargo = new TableColumn<>("CARGO");
-
-        cargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
-        tblBusca.getColumns().add(cargo);
-
         // Confirugar o modo de seleção
 
-        TableViewSelectionModel<Funcionario> selectionModel = tblBusca.getSelectionModel();
+        TableViewSelectionModel<Fornecedor> selectionModel = tblBusca.getSelectionModel();
 
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
 
         tblBusca.setSelectionModel(selectionModel);
     }
 
-    public Funcionario getEntidade() {
+    public Fornecedor getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Funcionario entidade) {
+    public void setEntidade(Fornecedor entidade) {
         this.entidade = entidade;
     }
 
@@ -163,29 +132,18 @@ public class FuncionarioController extends Controller {
         inpNome.setText(entidade.getNome());
         inpCpf.setText(entidade.getCpf());
         inpTelefone.setText(entidade.getTelefone());
-        inpSalario.setText(entidade.getSalario().toString());
         inpEmail.setText(entidade.getEmail());
-        inpGenero.setValue(entidade.getGenero());
-        inpCargo.setText(entidade.getCargo());
         inpRua.setText(entidade.getEndereco().getRua());
         inpBairro.setText(entidade.getEndereco().getBairro());
         inpCidade.setText(entidade.getEndereco().getCidade());
         inpNumero.setText(entidade.getEndereco().getNumero());
         inpNumero.setText(entidade.getEndereco().getEstado());
-        checkBoxAtivo.setSelected(entidade.isStatus());
-        inpDataNascimento.setValue(entidade.getDataNascimento());
     }
 
     public void carregarEntidade() {
         entidade.setNome(inpNome.getText());
         entidade.setCpf(inpCpf.getText());
-        entidade.setSalario(Double.parseDouble(inpSalario.getText()));
         entidade.setEmail(inpEmail.getText());
-        entidade.setDataNascimento(inpDataNascimento.getValue());
-        entidade.setGenero(inpGenero.getValue());
-        entidade.setCargo(inpCargo.getText());
-        entidade.setStatus(checkBoxAtivo.isSelected());
-        checkBoxAtivo.setSelected(entidade.isStatus());
 
         Endereco endereco = new Endereco();
         endereco.setRua(inpRua.getText());
@@ -200,12 +158,12 @@ public class FuncionarioController extends Controller {
     @FXML
     public void buscar(Event e) {
 
-        Funcionario filtro = new Funcionario();
+        Fornecedor filtro = new Fornecedor();
 
         filtro.setCpf(inpCpf.getText());
         filtro.setNome(inpNome.getText());
 
-        List<Funcionario> resultado = repositorio.Buscar(filtro);
+        List<Fornecedor> resultado = repositorio.Buscar(filtro);
 
         tblBusca.getItems().removeAll(tblBusca.getItems());
         tblBusca.getItems().addAll(resultado);
@@ -214,7 +172,7 @@ public class FuncionarioController extends Controller {
 
     @FXML
     public void editar(Event e) {
-        setEntidade((Funcionario) tblBusca.getSelectionModel().getSelectedItem());
+        setEntidade((Fornecedor) tblBusca.getSelectionModel().getSelectedItem());
         carregarCampos();
         abas.getTabs().get(1).setDisable(false);
         abas.getSelectionModel().select(1);
@@ -223,7 +181,7 @@ public class FuncionarioController extends Controller {
 
     @FXML
     public void novo(Event e) {
-        setEntidade(new Funcionario());
+        setEntidade(new Fornecedor());
         carregarCampos();
         abas.getTabs().get(1).setDisable(false);
         abas.getSelectionModel().select(1);

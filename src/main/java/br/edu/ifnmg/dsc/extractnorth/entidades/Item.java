@@ -26,10 +26,10 @@ public class Item {
 
   @Column(nullable = false)
   private double quantidade;
+  
+  @Column(nullable = false)
+  private Double valorUnitario;
 
-  @Column(precision = 8, scale = 2)
-  private BigDecimal valorUnitario;
-
-  @Column(precision = 8, scale = 2)
-  private BigDecimal valorTotal;
+  @Column(nullable = false)
+  private Double valorTotal;
 }

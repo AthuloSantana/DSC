@@ -72,7 +72,7 @@ public class TransacaoDAO extends DAO<TransacaoFinanceira> implements TransacaoR
             if (where.length() > 0)
                 where += " and ";
 
-            where += " t.dataTransacao = :p4";
+            where += " DATE(t.dataTransacao) = :p4";
             parametros.add(filtro.getDataTransacao());
         }
 

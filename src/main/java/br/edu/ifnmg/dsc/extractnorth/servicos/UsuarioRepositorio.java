@@ -6,8 +6,4 @@ public interface UsuarioRepositorio extends Repositorio<Usuario> {
 
   public Usuario Abrir(String Login);
 
-  public boolean Autenticar(String login, String senha);
-
-  public boolean Cadastrar(String novoUsuario, String novaSenha);
-
 }

@@ -1,6 +1,6 @@
 package br.edu.ifnmg.dsc.extractnorth.entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +28,9 @@ public class Funcionario extends Pessoa {
   private Genero genero;
 
   @Column
-  @Temporal(TemporalType.DATE)
-  private Date dataNascimento;
+  private LocalDate dataNascimento;
+
+  @Column(nullable = false)
+  private String cargo;
 
 }

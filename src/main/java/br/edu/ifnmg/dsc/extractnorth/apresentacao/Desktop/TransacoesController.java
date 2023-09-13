@@ -1,14 +1,15 @@
 package br.edu.ifnmg.dsc.extractnorth.apresentacao.Desktop;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.google.inject.Inject;
 
+import br.edu.ifnmg.dsc.extractnorth.entidades.Estoque;
 import br.edu.ifnmg.dsc.extractnorth.entidades.TipoUsuario;
-import br.edu.ifnmg.dsc.extractnorth.entidades.Usuario;
-import br.edu.ifnmg.dsc.extractnorth.servicos.UsuarioRepositorio;
-import javafx.collections.FXCollections;
+import br.edu.ifnmg.dsc.extractnorth.entidades.TransacaoFinanceira;
+import br.edu.ifnmg.dsc.extractnorth.servicos.EstoqueRepositorio;
+import br.edu.ifnmg.dsc.extractnorth.servicos.TransacaoRepositorio;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -16,7 +17,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -27,159 +27,140 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import net.rgielen.fxweaver.core.FxmlView;
 
 @Service
-@FxmlView("UsuariosView.fxml")
-public class UsuarioController extends Controller {
+@FxmlView("TransacoesView.fxml")
+public class TransacoesController extends Controller {
 
-    // A entidade em edição
-    private Usuario entidade;
+    private TransacaoFinanceira entidade;
 
-    ////////////////////////////////////////////
-    // Beans do Spring
-    ////////////////////////////////////////////
+    @Inject
+    TransacaoRepositorio transacoes;
 
     @Autowired
-    private UsuarioRepositorio repositorio;
+    private TransacaoRepositorio repositorio;
 
-    ////////////////////////////////////////////
-    // Componentes Visuais do JavaFX
-    ////////////////////////////////////////////
-
-    @FXML
-    private TextField txtLoginBusca;
-
-    @FXML
-    private TableView<Usuario> tblBusca;
-
-    @FXML
-    private TextField txtLogin;
+    @Autowired
+    private EstoqueRepositorio estoqueRepositorio;
 
     @FXML
     private TextField txtNomeBusca;
 
     @FXML
+    private TableView<TransacaoFinanceira> tblBusca;
+
+    @FXML
     private TextField txtNome;
 
     @FXML
-    private PasswordField pwdSenha;
+    private TextField txtPrecoVenda;
+
+    @FXML
+    private TextField txtPrecoCusto;
+
+    @FXML
+    private ChoiceBox<TipoUsuario> inpPessoa;
 
     @FXML
     private Label lblId;
 
     @FXML
-    private ChoiceBox<TipoUsuario> inpTipoUsuario;
-
-    @FXML
     private TabPane abas;
 
-    public UsuarioController() {
+    public TransacoesController() {
+
     }
 
     @FXML
     @Override
     public void initialize() {
 
-        // Inicialização da classe mãe Controller
         super.initialize();
 
-        // Configurar tabela
         configurarTabela();
 
-        inpTipoUsuario.setItems(FXCollections.observableArrayList(TipoUsuario.values()));
-
-        // Desabilita a aba de edição
         abas.getTabs().get(1).setDisable(true);
 
     }
 
-    public void configurarTabela() {
-
-        // Configurar as duas colunas
+    private void configurarTabela() {
 
         tblBusca.getColumns().removeAll(tblBusca.getColumns());
+        TableColumn<TransacaoFinanceira, String> nome = new TableColumn<>("NOME");
 
-        TableColumn<Usuario, Integer> codigo = new TableColumn<>("CÓDIGO");
-
-        codigo.setCellValueFactory(
-                new PropertyValueFactory<>("codigo"));
-
-        tblBusca.getColumns().add(codigo);
-
-        TableColumn<Usuario, String> nome = new TableColumn<>("NOME");
-
-        nome.setCellValueFactory(
-                new PropertyValueFactory<>("nome"));
-
+        nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tblBusca.getColumns().add(nome);
 
-        TableColumn<Usuario, String> login = new TableColumn<>("LOGIN");
+        tblBusca.getColumns().removeAll(tblBusca.getColumns());
+        TableColumn<TransacaoFinanceira, Double> precoCompra = new TableColumn<>("P. CUSTO");
 
-        login.setCellValueFactory(
-                new PropertyValueFactory<>("login"));
+        precoCompra.setCellValueFactory(new PropertyValueFactory<>("precoCompra"));
+        tblBusca.getColumns().add(precoCompra);
 
-        tblBusca.getColumns().add(login);
+        tblBusca.getColumns().removeAll(tblBusca.getColumns());
+        TableColumn<TransacaoFinanceira, Double> precoVenda = new TableColumn<>("P. VENDA");
+
+        precoVenda.setCellValueFactory(new PropertyValueFactory<>("precoVenda"));
+        tblBusca.getColumns().add(precoVenda);
+
         // Confirugar o modo de seleção
 
-        TableViewSelectionModel<Usuario> selectionModel = tblBusca.getSelectionModel();
+        TableViewSelectionModel<TransacaoFinanceira> selectionModel = tblBusca.getSelectionModel();
 
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
 
         tblBusca.setSelectionModel(selectionModel);
     }
 
-    public Usuario getEntidade() {
+    public TransacaoFinanceira getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Usuario entidade) {
+    public void setEntidade(TransacaoFinanceira entidade) {
         this.entidade = entidade;
     }
 
     public void carregarCampos() {
         lblId.setText(Long.toString(entidade.getId()));
-        txtLogin.setText(entidade.getLogin());
-        pwdSenha.setText(entidade.getSenha());
         txtNome.setText(entidade.getNome());
-        inpTipoUsuario.setValue(entidade.getTipoUsuario());
+        txtPrecoCusto.setText(entidade.getPrecoCompra().toString());
+        txtPrecoVenda.setText(entidade.getPrecoVenda().toString());
     }
 
     public void carregarEntidade() {
-        entidade.setLogin(txtLogin.getText());
-        entidade.setSenha(pwdSenha.getText());
         entidade.setNome(txtNome.getText());
-        entidade.setTipoUsuario(inpTipoUsuario.getValue());
+        entidade.setPrecoCompra(Double.parseDouble(txtPrecoCusto.getText()));
+        entidade.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
     }
 
     @FXML
     public void buscar(Event e) {
 
-        Usuario filtro = new Usuario();
+        TransacaoFinanceira filtro = new TransacaoFinanceira();
 
-        filtro.setLogin(txtLoginBusca.getText());
         filtro.setNome(txtNomeBusca.getText());
 
-        List<Usuario> resultado = repositorio.Buscar(filtro);
+        List<TransacaoFinanceira> resultado = repositorio.Buscar(filtro);
 
         tblBusca.getItems().removeAll(tblBusca.getItems());
-
         tblBusca.getItems().addAll(resultado);
 
     }
 
     @FXML
     public void editar(Event e) {
-        setEntidade((Usuario) tblBusca.getSelectionModel().getSelectedItem());
+        setEntidade((TransacaoFinanceira) tblBusca.getSelectionModel().getSelectedItem());
+        carregarCampos();
+        abas.getTabs().get(1).setDisable(false);
+        abas.getSelectionModel().select(1);
+
+    }
+
+    @FXML
+    public void novo(Event e) {
+        setEntidade(new TransacaoFinanceira());
         carregarCampos();
         abas.getTabs().get(1).setDisable(false);
         abas.getSelectionModel().select(1);
     }
-
-    // @FXML
-    // public void novo(Event e) {
-    // setEntidade(new Usuario());
-    // carregarCampos();
-    // abas.getTabs().get(1).setDisable(false);
-    // abas.getSelectionModel().select(1);
-    // }
 
     @FXML
     public void salvar(Event e) {
@@ -189,6 +170,8 @@ public class UsuarioController extends Controller {
 
         if (alert.getResult() == ButtonType.YES) {
             carregarEntidade();
+
+           
             if (repositorio.Salvar(entidade)) {
                 Alert confirmacao = new Alert(AlertType.INFORMATION, "Registro salvo com sucesso! ", ButtonType.OK);
                 confirmacao.showAndWait();
@@ -201,6 +184,7 @@ public class UsuarioController extends Controller {
             Alert confirmacao = new Alert(AlertType.INFORMATION, "Operação cancelada! ", ButtonType.OK);
             confirmacao.showAndWait();
         }
+
     }
 
     @FXML

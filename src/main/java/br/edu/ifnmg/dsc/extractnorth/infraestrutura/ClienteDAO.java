@@ -116,4 +116,11 @@ public class ClienteDAO extends DAO<Cliente> implements ClienteRepositorio {
 
         return consulta.getResultList();
     }
+
+    @Override
+    public List<String> buscarNome() {
+        TypedQuery<String> consulta = getManager().createQuery("select c.nome from Cliente c", String.class);
+        return consulta.getResultList();
+    }
+
 }

@@ -26,6 +26,12 @@ public class FornecedorDAO extends DAO<Fornecedor> implements FornecedorReposito
     }
 
     @Override
+    public List<String> buscarNome() {
+        TypedQuery<String> consulta = getManager().createQuery("select f.nome from Fornecedor f", String.class);
+        return consulta.getResultList();
+    }
+
+    @Override
     @Transactional
     public List<Fornecedor> Buscar(Fornecedor filtro) {
         String jpql = "select f from Fornecedor f join f.endereco e ";

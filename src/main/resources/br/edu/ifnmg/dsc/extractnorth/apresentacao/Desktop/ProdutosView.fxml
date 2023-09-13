@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="ProdutosView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="ProdutosView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifnmg.dsc.extractnorth.apresentacao.Desktop.ProdutoController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0">
          <menus>
@@ -58,41 +57,45 @@
       </MenuBar>
       <TabPane fx:id="abas" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="601.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab text="Busca">
+            <Tab text="Buscar">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <AnchorPane layoutY="7.0" prefHeight="362.0" prefWidth="600.0">
                            <children>
-                              <TableView fx:id="tblBusca" layoutY="74.0" onMouseClicked="#editar" prefHeight="294.0" prefWidth="600.0">
+                              <TableView fx:id="tblBusca" layoutY="58.0" onMouseClicked="#editar" prefHeight="310.0" prefWidth="600.0">
                                  <columns>
-                                    <TableColumn prefWidth="281.0" text="Produto" />
-                                    <TableColumn prefWidth="102.0" text="Preço" />
+                                    <TableColumn fx:id="campoNome" prefWidth="285.0" text="NOME" />
+                                    <TableColumn fx:id="campoPrecoVenda" prefWidth="171.0" text="P. VENDA" />
+                                    <TableColumn fx:id="campoPrecoCusto" prefWidth="143.0" text="P. CUSTO" />
                                  </columns>
                               </TableView>
-                              <TextField fx:id="txtLoginBusca" layoutX="89.0" layoutY="20.0" prefHeight="26.0" prefWidth="330.0" />
-                              <Label layoutX="41.0" layoutY="24.0" text="Login:" />
-                              <Button fx:id="btnBuscar" layoutX="430.0" layoutY="20.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
-                              <Button fx:id="btnNovo" layoutX="500.0" layoutY="20.0" mnemonicParsing="false" onAction="#novo" text="Novo" />
+                              <TextField fx:id="txtNome" layoutX="80.0" layoutY="20.0" prefHeight="26.0" prefWidth="368.0" />
+                              <Label layoutX="25.0" layoutY="24.0" text="Nome:" />
+                              <Button fx:id="btnBuscar" layoutX="471.0" layoutY="21.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                              <Button fx:id="btnNovo" layoutX="535.0" layoutY="21.0" mnemonicParsing="false" onAction="#novo" text="Novo" />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Edição">
+            <Tab text="Editar">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="70.0" layoutY="14.0" text="Codigo:" />
-                        <Label fx:id="lblId" layoutX="138.0" layoutY="14.0" prefHeight="18.0" prefWidth="282.0" />
-                        <Label layoutX="82.0" layoutY="56.0" text="Login:" />
-                        <TextField fx:id="txtLogin" layoutX="138.0" layoutY="52.0" prefHeight="26.0" prefWidth="283.0" />
-                        <Label layoutX="80.0" layoutY="107.0" text="Senha:" />
-                        <PasswordField fx:id="pwdSenha" layoutX="141.0" layoutY="103.0" prefHeight="26.0" prefWidth="287.0" />
-                        <Separator layoutX="29.0" layoutY="251.0" prefHeight="7.0" prefWidth="542.0" />
-                        <Button fx:id="btnSalvar" layoutX="198.0" layoutY="280.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
-                        <Button fx:id="btnCancelar" layoutX="332.0" layoutY="280.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                        <Label layoutX="22.0" layoutY="24.0" text="Codigo:" />
+                        <Label fx:id="lblId" layoutX="104.0" layoutY="24.0" prefHeight="18.0" prefWidth="282.0" />
+                        <Separator layoutX="21.0" layoutY="274.0" prefHeight="7.0" prefWidth="542.0" />
+                        <Button fx:id="btnSalvar" layoutX="516.0" layoutY="302.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+                        <Button fx:id="btnCancelar" layoutX="435.0" layoutY="302.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                        <Label layoutX="25.0" layoutY="98.0" text="Nome " />
+                        <TextField fx:id="txtNome" layoutX="104.0" layoutY="94.0" prefHeight="25.0" prefWidth="459.0" />
+                        <Separator layoutX="21.0" layoutY="70.0" prefHeight="7.0" prefWidth="542.0" />
+                        <Label layoutX="11.0" layoutY="159.0" text="Preço de Venda" />
+                        <TextField fx:id="txtPrecoCusto" layoutX="107.0" layoutY="217.0" prefHeight="25.0" prefWidth="458.0" />
+                        <Label layoutX="13.0" layoutY="221.0" text="Preço de Custo" />
+                        <TextField fx:id="txtPrecoVenda" layoutX="105.0" layoutY="155.0" prefHeight="25.0" prefWidth="460.0" />
                      </children>
                   </AnchorPane>
                </content>

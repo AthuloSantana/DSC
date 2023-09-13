@@ -2,8 +2,10 @@ package br.edu.ifnmg.dsc.extractnorth.apresentacao.Desktop;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.ifnmg.dsc.extractnorth.servicos.AutenticacaoServico;
 import br.edu.ifnmg.dsc.extractnorth.servicos.UsuarioRepositorio;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -24,6 +26,9 @@ public class LoginController extends Controller {
     @Inject
     UsuarioRepositorio usuarios;
 
+    @Autowired
+    private AutenticacaoServico autenticacao;
+
     @FXML
     private TextField txtLogin;
 
@@ -32,6 +37,9 @@ public class LoginController extends Controller {
 
     @FXML
     private Button btnRegistre;
+
+    @FXML
+    private Button btnEntrar;
 
     @FXML
     TitledPane LoginView;
@@ -45,7 +53,7 @@ public class LoginController extends Controller {
         String login = txtLogin.getText();
         String senha = pwdSenha.getText();
 
-        if (usuarios.Autenticar(login, senha)) {
+        if (autenticacao.autenticar(login, senha)) {
 
             Alert alert = new Alert(AlertType.INFORMATION, "Bem vindo ao sistema! ", ButtonType.OK);
             alert.showAndWait();

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +41,11 @@ public class TransacaoFinanceira {
   @Column(nullable = false)
   private StatusTransacao statusTransacao;
 
-  @Column(precision = 8, scale = 2)
-  private BigDecimal valor;
+  @Column(nullable = false)
+  private Double valor;
 
   @Column
   @Temporal(TemporalType.TIMESTAMP)
-  private Date dataTransacao;
+  private LocalDate dataTransacao;
 
 }
